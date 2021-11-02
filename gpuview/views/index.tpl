@@ -36,6 +36,7 @@
     </nav>
     <div class="content-wrapper">
         <div class="container-fluid" style="padding: 70px 40px 40px 40px">
+            % if not table_only:
             <div class="row">
                 % for gpustat in gpustats:
                 % for gpu in gpustat.get('gpus', []):
@@ -74,6 +75,7 @@
                 % end
                 % end
             </div>
+            % end
             <!-- GPU Stat Card-->
             <div class="card mb-3">
                 <div class="card-header">

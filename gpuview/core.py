@@ -17,11 +17,16 @@ except ImportError:
 ABS_PATH = os.path.dirname(os.path.realpath(__file__))
 HOSTS_DB = os.path.join(ABS_PATH, 'gpuhosts.db')
 SAFE_ZONE = False  # Safe to report all details.
+TABLE_ONLY = False # Only display table view
 
 
 def safe_zone(safe=False):
     global SAFE_ZONE
     SAFE_ZONE = safe
+
+def table_only(table_only=False):
+    global TABLE_ONLY
+    TABLE_ONLY = table_only
 
 
 def my_gpustat():
@@ -176,7 +181,7 @@ def print_hosts():
 
 
 def install_service(host=None, port=None,
-                    safe_zone=False, exclude_self=False):
+                    safe_zone=False, exclude_self=False, table_only=False):
     arg = ''
     if host is not None:
         arg += '--host %s ' % host
@@ -186,5 +191,7 @@ def install_service(host=None, port=None,
         arg += '--safe-zone '
     if exclude_self:
         arg += '--exclude-self '
+    if table_only:
+        arg += '--table-only '
     script = os.path.join(ABS_PATH, 'service.sh')
     subprocess.call('{} "{}"'.format(script, arg.strip()), shell=True)

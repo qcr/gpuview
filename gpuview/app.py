@@ -29,7 +29,7 @@ EXCLUDE_SELF = False  # Do not report to `/gpustat` calls.
 def index():
     gpustats = core.all_gpustats()
     now = datetime.now().strftime('Updated at %Y-%m-%d %H-%M-%S')
-    return template('index', gpustats=gpustats, update_time=now)
+    return template('index', gpustats=gpustats, update_time=now, table_only=core.TABLE_ONLY)
 
 
 @app.route('/gpustat', methods=['GET'])
@@ -59,6 +59,7 @@ def main():
 
     if 'run' == args.action:
         core.safe_zone(args.safe_zone)
+        core.table_only(args.table_only)
         global EXCLUDE_SELF
         EXCLUDE_SELF = args.exclude_self
         app.run(host=args.host, port=args.port, debug=args.debug)
